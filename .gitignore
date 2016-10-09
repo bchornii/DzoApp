@@ -243,5 +243,4 @@ ModelManifest.xml
 
 # Auto generated wix files
 *.wixobj
-DzoInstall/WebSiteContent.wxs
-
+**/[Ww]ebSiteContent.wsx
