@@ -240,3 +240,8 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# Auto generated wix files
+.wixobj
+WebSiteContent.*
+
