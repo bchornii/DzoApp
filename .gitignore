@@ -243,6 +243,3 @@ ModelManifest.xml
 
 # Auto generated wix files
 *.wixobj
-
-# Ignore WebSiteContent in all directories
-WebSiteContent.wxs
