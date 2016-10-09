@@ -1,0 +1,69 @@
+﻿<div class="col-md-11">
+    <div class="text-center">
+        <h2>ЗАКУПІВЛІ, В ЯКИХ УЧАСНИК ПРИЙНЯВ УЧАСТЬ</h2>
+    </div>
+    <div class="navbar-collapse collapse">
+        <div class="form-group">
+            <button class="btn btn-primary"
+                    ng-disabled="index.checkCompaniesForSelection()"
+                    ng-click="index.exportCompanies()">
+                Export
+            </button>
+        </div>
+        <div class="form-group">
+            <label for="statselect">Статус тендера</label>
+            <select id="statselect" class="form-control"
+                    ng-model="index.selectedStatus"
+                    ng-options="option for option in index.statuses | orderBy: option">                
+            </select>
+        </div>
+    </div>
+    <br />
+    <table class="table table-hover">
+        <tr class="alert-info">
+            <td>
+                <div class="col-md-4">Предмет закупівлі</div>
+                <div class="col-md-2">Статус</div>
+                <div class="col-md-2">Оголошено</div>
+                <div class="col-md-2">Замовник</div>
+                <div class="col-md-1">
+                    Вибір<br />
+                    <input type="checkbox" ng-model="index.selectAll" ng-click="index.selectAllCompanies()" />
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="company in index.companies | filter : index.filterCompanies">
+            <td>
+                <div class="col-md-11">
+                    <h3>
+                        <a class="btn-link" ng-href="https://www.dzo.com.ua{{company.link}}"><span>{{company.name}}</span></a>
+                    </h3>
+                </div>
+                <br />
+                <div class="col-md-4">
+                    {{company.expectedPrice}}
+                    <br />
+                    {{company.codeId}}
+                    <br />
+                    {{company.buyId}}
+                    <br />
+                    {{company.buyProcedureName}}
+                </div>
+                <div class="col-md-2">
+                    {{company.status}}
+                </div>
+                <div class="col-md-2">
+                    {{company.auctionDate}}
+                </div>
+                <div class="col-md-2">
+                    {{company.organization}}
+                </div>
+                <div class="col-md-1">
+                    <input type="checkbox" ng-model="company.selected" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <hr />
+</div>
+

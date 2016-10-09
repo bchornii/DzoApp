@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*" Name="DZO Application" Language="1033" Version="1.0.0.0" Manufacturer="bohdan.magic" UpgradeCode="9279b740-8419-45c4-9538-6a45f8e949c7">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
+
+		<Feature Id="ProductFeature" Title="DzoApp.Setup" Level="1">
+      <ComponentGroupRef Id="MyWebWebComponents" />
+      <ComponentGroupRef Id="DzoSpaIssConfiguration" />
+      <ComponentGroupRef Id="ApplicationShortcutConfig" /> 
+    </Feature>
+    
+    <!-- Specify UI -->
+    <UIRef Id="MyUi" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />  
+       
+	</Product>
+  
+  <Fragment>    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="DzoApplication" />
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+    </Directory>
+  </Fragment>
+	
+</Wix>

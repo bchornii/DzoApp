@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="DzoAppPool" Guid="" KeyPath="yes">
+        <iis:WebAppPool Id="DzoAppPool"
+                        Name="DzoWebsite"
+                        Identity="localSystem"
+                        ManagedPipelineMode="Integrated"
+                        ManagedRuntimeVersion="v4.0" />
+      </Component>
+      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+        <!-- Install to default web site -->
+        <iis:WebSite Id="DemoWebsiteWebsite" Description='DzoAppSite' Directory='INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
+          <iis:WebAddress Id="AllUnassigned" Port="8120" />
+          <iis:WebApplication Id="DzoApplication" Name="[DemoWebsiteWebsite][WEBSITE_ID]" WebAppPool="DzoAppPool"></iis:WebApplication>
+        </iis:WebSite>
+      </Component>
+    </DirectoryRef>
+
+    <ComponentGroup Id="DzoSpaIssConfiguration">
+      <ComponentRef Id="InstallWebsite" />
+      <ComponentRef Id="DzoAppPool" />
+    </ComponentGroup>
+    
+  </Fragment>
+</Wix>

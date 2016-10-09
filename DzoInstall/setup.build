@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<Project ToolsVersion="3.5" DefaultTargets="Build"
+       xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>    
+    <WebSiteSource>..\Application.Web\</WebSiteSource>
+    <SetupF>..\Setup\</SetupF>
+    <PublishF>publish\</PublishF>
+    <Publish>$(SetupF)$(PublishF)</Publish>
+    <WebSiteContentCode>WebSiteContent.wxs</WebSiteContentCode>
+	<WebSiteContentObject>WebSiteContent.wixobj</WebSiteContentObject>
+    <MsiOut>bin\Release\DzoAppSetup.msi</MsiOut>
+  </PropertyGroup>
+  <!-- Defining group of temporary files which is the content of the web site. -->
+  <ItemGroup>
+    <WebSiteContent Include="$(WebSiteContentCode)" />
+  </ItemGroup>
+
+  <!-- The list of WIX input files -->
+  <ItemGroup>
+    <WixCode Include="Product.wxs" />
+    <WixCode Include="$(WebSiteContentCode)" />
+	<WixCode Include="DemoUI.wxs" />
+	<WixCode Include="IISConfiguration.wxs" />
+	<WixCode Include="AppShortcut.wxs" />
+  </ItemGroup>
+  
+  <!-- The list of WIX after candle files -->
+  <ItemGroup>
+    <WixObject Include="Product.wixobj" />
+    <WixObject Include="$(WebSiteContentObject)" />
+	<WixObject Include="DemoUI.wixobj" />
+	<WixObject Include="IISConfiguration.wixobj" />
+	<WixObject Include="AppShortcut.wixobj" />
+  </ItemGroup>  
+
+   <Target Name="Harvest">
+		<!-- Harvest all content of published result -->
+		<Exec
+			Command='"$(WiX)bin\heat.exe" dir $(Publish) -dr INSTALLFOLDER -ke -srd -cg MyWebWebComponents -var var.publishDir -gg -out $(WebSiteContentCode)'
+			ContinueOnError="false"
+			WorkingDirectory="." />
+   </Target>
+   
+   <Target Name="WIX">
+    <!--     At last create an installer -->
+    <Message Text="TEST: @(WixCode)"/>
+	    <Exec
+	  	  Command='"$(WiX)bin\candle.exe" -ext WixIISExtension -ext WixUtilExtension -dpublishDir=$(Publish) -dMyWebResourceDir=. @(WixCode, &apos; &apos;)'
+	  	  ContinueOnError="false"
+	  	  WorkingDirectory="." />
+		<Exec
+		  Command='"$(WiX)bin\light.exe" -ext WixIISExtension -ext WixUIExtension -ext WixUtilExtension -out $(MsiOut) @(WixObject, &apos; &apos;)'
+		  ContinueOnError="false"
+		  WorkingDirectory="." />
+    <!-- A message at the end -->
+    <Message Text="Install package has been created." />
+  </Target>
+</Project>
