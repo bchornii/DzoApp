@@ -242,6 +242,6 @@ ModelManifest.xml
 .fake/
 
 # Auto generated wix files
-.wixobj
+*.wixobj
 WebSiteContent.*
 
