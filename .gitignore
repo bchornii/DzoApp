@@ -245,4 +245,4 @@ ModelManifest.xml
 *.wixobj
 
 # Ignore WebSiteContent in all directories
-WebSiteContent.wsx
+WebSiteContent.wxs
